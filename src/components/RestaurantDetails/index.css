@@ -1,0 +1,41 @@
+.restaurant-details-container {
+  width: 100%;
+}
+
+.restaurant-banner-section {
+  background-color: #333333;
+  padding: 40px 80px;
+  display: flex;
+  gap: 32px;
+  color: white;
+}
+
+.restaurant-banner {
+  width: 445px;
+  height: 280px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.restaurant-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.restaurant-content h1 {
+  font-size: 36px;
+  margin-bottom: 16px;
+}
+
+.restaurant-content p {
+  margin: 6px 0px;
+}
+
+.food-items-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 32px;
+  row-gap: 32px;
+  padding: 40px 80px;
+}

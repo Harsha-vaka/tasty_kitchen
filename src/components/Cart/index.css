@@ -1,0 +1,153 @@
+.cart-container {
+  width: 100%;
+  max-width: 1110px;
+  margin: auto;
+  padding: 48px 20px;
+}
+
+.cart-table {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 32px;
+  background-color: #ffffff;
+}
+
+.cart-header {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  margin-bottom: 24px;
+}
+
+.cart-header p {
+  font-size: 16px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  align-items: center;
+  padding: 24px 0px;
+  border-bottom: 1px dashed #cbd5e1;
+}
+
+.cart-food-info {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cart-food-info img {
+  width: 136px;
+  height: 100px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.cart-food-info p {
+  font-size: 16px;
+  font-weight: 500;
+  color: #183b56;
+}
+
+.quantity-controller {
+  display: flex;
+  align-items: center;
+}
+
+.quantity-controller button {
+  width: 24px;
+  height: 24px;
+  border: 1px solid #475569;
+  background-color: transparent;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.quantity-controller p {
+  margin: 0px 12px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.cart-price {
+  color: #f7931e;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.total-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-top: 32px;
+}
+
+.order-total-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-total-text {
+  font-size: 24px;
+  color: #3e4c59;
+  margin: 0px;
+}
+
+.total-price {
+  font-size: 32px;
+  font-weight: 700;
+  color: #3e4c59;
+  margin: 0px;
+}
+
+.place-order-btn {
+  width: 120px;
+  height: 40px;
+  background-color: #f7931e;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
+.payment-success {
+  min-height: 70vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.success-icon {
+  font-size: 64px;
+  color: #22c55e;
+  margin-bottom: 24px;
+}
+
+.payment-success h1 {
+  font-size: 32px;
+  color: #1e293b;
+  margin-bottom: 12px;
+}
+
+.payment-success p {
+  color: #64748b;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.payment-success button {
+  margin-top: 24px;
+  width: 145px;
+  height: 40px;
+  background-color: #f7931e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}

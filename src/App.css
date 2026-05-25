@@ -1,0 +1,58 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Roboto';
+  background-color: #f8fafc;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .form-section,
+  .login-image {
+    width: 100%;
+  }
+
+  .restaurants-list {
+    grid-template-columns: 1fr;
+  }
+
+  .food-items-list {
+    grid-template-columns: 1fr;
+  }
+
+  .navbar {
+    padding: 0px 20px;
+  }
+
+  .home-container,
+  .restaurant-details-container,
+  .cart-container {
+    padding: 20px;
+  }
+
+  .cart-container li {
+    flex-direction: column;
+    gap: 15px;
+  }
+}

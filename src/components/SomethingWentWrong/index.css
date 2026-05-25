@@ -1,0 +1,19 @@
+.failure-view-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.failure-image {
+  width: 320px;
+}
+
+.failure-view-container button {
+  background-color: #f7931e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+}

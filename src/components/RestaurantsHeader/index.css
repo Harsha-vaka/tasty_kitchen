@@ -1,0 +1,36 @@
+.restaurants-header {
+  margin-top: 48px;
+  margin-bottom: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 20px;
+}
+
+.restaurants-header h1 {
+  font-size: 32px;
+  color: #183b56;
+  margin: 0px;
+  margin-bottom: 8px;
+}
+
+.restaurants-header p {
+  font-size: 16px;
+  color: #64748b;
+  margin: 0px;
+}
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-container select {
+  border: none;
+  background-color: transparent;
+  outline: none;
+  color: #475569;
+  font-size: 14px;
+}
