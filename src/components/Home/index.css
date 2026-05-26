@@ -12,14 +12,21 @@
   object-fit: cover;
 }
 
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
 .pagination-container {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   margin-top: 48px;
-  margin-bottom: 32px;
+  margin-bottom: 24px;
 }
 
 .pagination-container button {
@@ -38,9 +45,32 @@
   font-weight: 500;
   color: #334155;
 }
+
+.disabled-btn {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.slick-slide img {
+  display: block;
+}
+
+.slick-dots li button:before {
+  font-size: 10px;
+  color: #cbd5e1;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #f7931e;
+}
+
 @media screen and (max-width: 768px) {
   .home-container {
     padding: 20px;
+  }
+
+  .offer-image {
+    height: 188px;
   }
 
   .pagination-container {

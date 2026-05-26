@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react'
 import Cookies from 'js-cookie'
 import Slider from 'react-slick'
 import {Oval} from 'react-loader-spinner'
+
 import Header from '../Header'
 import Footer from '../Footer'
 import AllRestaurants from '../AllRestaurants'
@@ -9,6 +10,8 @@ import RestaurantsHeader from '../RestaurantsHeader'
 
 import 'slick-carousel/slick/slick.css'
 import 'slick-carousel/slick/slick-theme.css'
+
+import './index.css'
 
 const SlickSlider = Slider.default || Slider
 
@@ -21,11 +24,27 @@ const apiStatusConstants = {
 
 const Home = ({sortByOptions}) => {
   const [offers, setOffers] = useState([])
-  const [restaurants, setRestaurants] = useState([])
-  const [activePage, setActivePage] = useState(1)
-  const [sortBy, setSortBy] = useState('Lowest')
-  const [offersStatus, setOffersStatus] = useState(apiStatusConstants.initial)
-  const [restaurantsStatus, setRestaurantsStatus] = useState(
+  const [restaurants, setRestaurants] =
+    useState([])
+
+  const [activePage, setActivePage] =
+    useState(1)
+
+  const [totalPages, setTotalPages] =
+    useState(1)
+
+  const [sortBy, setSortBy] =
+    useState('Lowest')
+
+  const [offersStatus, setOffersStatus] =
+    useState(
+      apiStatusConstants.initial,
+    )
+
+  const [
+    restaurantsStatus,
+    setRestaurantsStatus,
+  ] = useState(
     apiStatusConstants.initial,
   )
 
@@ -38,9 +57,12 @@ const Home = ({sortByOptions}) => {
   }, [activePage, sortBy])
 
   const getOffers = async () => {
-    setOffersStatus(apiStatusConstants.inProgress)
+    setOffersStatus(
+      apiStatusConstants.inProgress,
+    )
 
-    const jwtToken = Cookies.get('jwt_token')
+    const jwtToken =
+      Cookies.get('jwt_token')
 
     const response = await fetch(
       'https://apis.ccbp.in/restaurants-list/offers',
@@ -55,31 +77,63 @@ const Home = ({sortByOptions}) => {
 
     if (response.ok) {
       setOffers(data.offers)
-      setOffersStatus(apiStatusConstants.success)
+
+      setOffersStatus(
+        apiStatusConstants.success,
+      )
+    } else {
+      setOffersStatus(
+        apiStatusConstants.failure,
+      )
     }
   }
 
   const getRestaurants = async () => {
-    setRestaurantsStatus(apiStatusConstants.inProgress)
+    setRestaurantsStatus(
+      apiStatusConstants.inProgress,
+    )
 
     const limit = 9
-    const offset = (activePage - 1) * limit
 
-    const jwtToken = Cookies.get('jwt_token')
+    const offset =
+      (activePage - 1) * limit
+
+    const jwtToken =
+      Cookies.get('jwt_token')
 
     const url = `https://apis.ccbp.in/restaurants-list?offset=${offset}&limit=9&sort_by_rating=${sortBy}`
 
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
+    const response = await fetch(
+      url,
+      {
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
       },
-    })
+    )
 
     const data = await response.json()
 
     if (response.ok) {
       setRestaurants(data.restaurants)
-      setRestaurantsStatus(apiStatusConstants.success)
+
+      const totalRestaurants =
+        data.total || 0
+
+      const calculatedPages =
+        Math.ceil(
+          totalRestaurants / 9,
+        )
+
+      setTotalPages(calculatedPages)
+
+      setRestaurantsStatus(
+        apiStatusConstants.success,
+      )
+    } else {
+      setRestaurantsStatus(
+        apiStatusConstants.failure,
+      )
     }
   }
 
@@ -91,16 +145,40 @@ const Home = ({sortByOptions}) => {
     autoplay: true,
   }
 
-  return (
-    <>
-      <Header />
+  const renderOffersLoader = () => (
+    <div
+      testid="restaurants-offers-loader"
+      className="loader-container"
+    >
+      <Oval
+        color="gold"
+        height={40}
+        width={50}
+      />
+    </div>
+  )
 
-      <div className="home-container">
-        {offersStatus === apiStatusConstants.inProgress ? (
-          <div testid="restaurants-offers-loader">
-            <Oval color="gold" height={40} width={50} />
-          </div>
-        ) : (
+  const renderRestaurantsLoader =
+    () => (
+      <div
+        testid="restaurants-list-loader"
+        className="loader-container"
+      >
+        <Oval
+          color="gold"
+          height={40}
+          width={50}
+        />
+      </div>
+    )
+
+  const renderOffersSection = () => {
+    switch (offersStatus) {
+      case apiStatusConstants.inProgress:
+        return renderOffersLoader()
+
+      case apiStatusConstants.success:
+        return (
           <SlickSlider {...settings}>
             {offers.map(each => (
               <img
@@ -111,35 +189,100 @@ const Home = ({sortByOptions}) => {
               />
             ))}
           </SlickSlider>
-        )}
+        )
+
+      default:
+        return null
+    }
+  }
+
+  const renderRestaurantsSection =
+    () => {
+      switch (restaurantsStatus) {
+        case apiStatusConstants.inProgress:
+          return renderRestaurantsLoader()
+
+        case apiStatusConstants.success:
+          return (
+            <AllRestaurants
+              restaurants={
+                restaurants
+              }
+            />
+          )
+
+        default:
+          return null
+      }
+    }
+
+  return (
+    <>
+      <Header />
+
+      <div className="home-container">
+        {renderOffersSection()}
 
         <RestaurantsHeader
           sortBy={sortBy}
           setSortBy={setSortBy}
-          sortByOptions={sortByOptions}
+          sortByOptions={
+            sortByOptions
+          }
         />
 
-        {restaurantsStatus === apiStatusConstants.inProgress ? (
-          <div testid="restaurants-list-loader">
-            <Oval color="gold" height={40} width={50} />
-          </div>
-        ) : (
-          <AllRestaurants restaurants={restaurants} />
-        )}
+        {renderRestaurantsSection()}
 
         <div className="pagination-container">
           <button
+            type="button"
             testid="pagination-left-button"
-            onClick={() => setActivePage(prev => Math.max(prev - 1, 1))}
+            onClick={() =>
+              setActivePage(prev =>
+                Math.max(
+                  prev - 1,
+                  1,
+                ),
+              )
+            }
+            disabled={
+              activePage === 1
+            }
+            className={
+              activePage === 1
+                ? 'disabled-btn'
+                : ''
+            }
           >
             {'<'}
           </button>
 
-          <span testid="active-page-number">{activePage}</span>
+          <span testid="active-page-number">
+            {activePage} of{' '}
+            {totalPages}
+          </span>
 
           <button
+            type="button"
             testid="pagination-right-button"
-            onClick={() => setActivePage(prev => prev + 1)}
+            onClick={() =>
+              setActivePage(prev =>
+                Math.min(
+                  prev + 1,
+                  totalPages,
+                ),
+              )
+            }
+            disabled={
+              activePage ===
+              totalPages
+            }
+            className={
+              activePage ===
+              totalPages
+                ? 'disabled-btn'
+                : ''
+            }
           >
             {'>'}
           </button>
