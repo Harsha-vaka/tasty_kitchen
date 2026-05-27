@@ -1,4 +1,7 @@
+import {useEffect, useState} from 'react'
+
 import Cookies from 'js-cookie'
+
 import {
   Link,
   useNavigate,
@@ -11,6 +14,43 @@ const Header = () => {
   const navigate = useNavigate()
 
   const location = useLocation()
+
+  const [cartCount, setCartCount] =
+    useState(0)
+
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cartData =
+        JSON.parse(
+          localStorage.getItem(
+            'cartData',
+          ),
+        ) || []
+
+      const totalCount =
+        cartData.reduce(
+          (acc, each) =>
+            acc + each.quantity,
+          0,
+        )
+
+      setCartCount(totalCount)
+    }
+
+    updateCartCount()
+
+    window.addEventListener(
+      'storage',
+      updateCartCount,
+    )
+
+    return () => {
+      window.removeEventListener(
+        'storage',
+        updateCartCount,
+      )
+    }
+  }, [location.pathname])
 
   const onClickLogout = () => {
     Cookies.remove('jwt_token')
@@ -58,7 +98,17 @@ const Header = () => {
               : 'nav-link'
           }
         >
-          Cart
+          <div className="cart-nav-container">
+            <p className="cart-text">
+              Cart
+            </p>
+
+            {cartCount > 0 && (
+              <div className="cart-count-badge">
+                {cartCount}
+              </div>
+            )}
+          </div>
         </Link>
 
         <button

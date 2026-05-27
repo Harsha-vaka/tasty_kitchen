@@ -21,8 +21,10 @@ const Cart = () => {
   const [cartItems, setCartItems] =
     useState([])
 
-  const [paymentSuccess, setPaymentSuccess] =
-    useState(false)
+  const [
+    paymentSuccess,
+    setPaymentSuccess,
+  ] = useState(false)
 
   useEffect(() => {
     const cartData =
@@ -54,6 +56,10 @@ const Cart = () => {
       'cartData',
       JSON.stringify(updatedCart),
     )
+
+    window.dispatchEvent(
+      new Event('storage'),
+    )
   }
 
   const decrementQuantity = id => {
@@ -69,7 +75,9 @@ const Cart = () => {
 
         return each
       })
-      .filter(each => each.quantity > 0)
+      .filter(
+        each => each.quantity > 0,
+      )
 
     setCartItems(updatedCart)
 
@@ -77,12 +85,22 @@ const Cart = () => {
       'cartData',
       JSON.stringify(updatedCart),
     )
+
+    window.dispatchEvent(
+      new Event('storage'),
+    )
   }
 
   const onPlaceOrder = () => {
     setPaymentSuccess(true)
 
-    localStorage.removeItem('cartData')
+    localStorage.removeItem(
+      'cartData',
+    )
+
+    window.dispatchEvent(
+      new Event('storage'),
+    )
   }
 
   const totalPrice = cartItems.reduce(
@@ -128,7 +146,7 @@ const Cart = () => {
         <ul>
           {cartItems.map(each => (
             <li
-              testid="cartItem"
+              data-testid="cartItem"
               className="cart-item"
               key={each.id}
             >
@@ -144,7 +162,7 @@ const Cart = () => {
               <div className="quantity-controller">
                 <button
                   type="button"
-                  testid="decrement-quantity"
+                  data-testid="decrement-quantity"
                   onClick={() =>
                     decrementQuantity(
                       each.id,
@@ -154,13 +172,13 @@ const Cart = () => {
                   <HiOutlineMinusSm />
                 </button>
 
-                <p testid="item-quantity">
+                <p data-testid="item-quantity">
                   {each.quantity}
                 </p>
 
                 <button
                   type="button"
-                  testid="increment-quantity"
+                  data-testid="increment-quantity"
                   onClick={() =>
                     incrementQuantity(
                       each.id,
@@ -173,6 +191,7 @@ const Cart = () => {
 
               <p className="cart-price">
                 <FaRupeeSign />
+
                 {each.cost *
                   each.quantity}
                 .00
@@ -188,7 +207,7 @@ const Cart = () => {
             </h1>
 
             <p
-              testid="total-price"
+              data-testid="total-price"
               className="total-price"
             >
               ₹{totalPrice}.00
@@ -211,11 +230,13 @@ const Cart = () => {
     <>
       <Header />
 
-      {paymentSuccess
-        ? renderPaymentSuccessView()
-        : cartItems.length === 0
-        ? <CartEmpty />
-        : renderCartView()}
+      {paymentSuccess ? (
+        renderPaymentSuccessView()
+      ) : cartItems.length === 0 ? (
+        <CartEmpty />
+      ) : (
+        renderCartView()
+      )}
 
       <Footer />
     </>

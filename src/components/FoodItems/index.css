@@ -90,3 +90,33 @@
     height: 200px;
   }
 }
+.cart-nav-container {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+.cart-text {
+  margin: 0;
+}
+
+.cart-count-badge {
+  min-width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  background-color: #f7931e;
+
+  color: #ffffff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  padding: 2px 6px;
+}

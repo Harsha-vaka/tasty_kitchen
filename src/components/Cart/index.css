@@ -151,3 +151,60 @@
   border-radius: 8px;
   cursor: pointer;
 }
+.cart-item:last-child {
+  border-bottom: none;
+}
+
+.quantity-controller button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart-price {
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+}
+
+.payment-success button:hover,
+.place-order-btn:hover {
+  opacity: 0.9;
+}
+
+@media screen and (max-width: 768px) {
+  .cart-header {
+    display: none;
+  }
+
+  .cart-item {
+    grid-template-columns: 1fr;
+
+    row-gap: 18px;
+  }
+
+  .cart-food-info {
+    width: 100%;
+  }
+
+  .quantity-controller {
+    justify-content: flex-start;
+  }
+
+  .cart-price {
+    justify-content: flex-start;
+  }
+
+  .order-total-text {
+    font-size: 20px;
+  }
+
+  .total-price {
+    font-size: 24px;
+  }
+
+  .place-order-btn {
+    width: 100%;
+  }
+}
